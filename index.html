@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reciepe Ready In Minutes</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: Arial, sans-serif;
+      }
+      #recipeList {
+        list-style-type: none;
+      }
+      #recipeList li {
+        cursor: pointer;
+        padding: 5px;
+        border: 1px solid #000;
+        margin-bottom: 10px;
+        width: 300px;
+      }
+      #recipeReadyInMinutes {
+        margin-top: 20px;
+        font-size: 20px;
+        color: red;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <ul id="recipeList"></ul>
+      <p id="recipeReadyInMinutes"></p>
+    </div>
+    <script>
+      let list=document.querySelector("#recipeList");
+      let show=document.querySelector("#recipeReadyInMinutes");
+
+      fetch("https://content.newtonschool.co/v1/pr/64996337e889f331d43f70ba/recipes")
+      .then((resolve)=>{return resolve.json()})
+      .then((data)=>{
+        for(let x in data){
+          let li=document.createElement("li");
+          li.innerHTML=data[x].title;
+          list.append(li);
+          li.onclick = () => {
+            show.innerHTML = "Get dish in " + data[x].readyInMinutes + " minutes";
+          };
+        }
+      });
+    </script>
+  </body>
+</html>
